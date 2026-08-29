@@ -1,6 +1,6 @@
 package com.rag.ragApp.controller;
 import com.rag.ragApp.service.DataIngestionService;
-import com.rag.ragApp.service.MultiAgentRagsCrew;
+import com.rag.ragApp.service.agents.MultiAgentRagsCrew;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

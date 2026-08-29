@@ -1,7 +1,11 @@
 package com.rag.ragApp.service;
 
+import com.rag.ragApp.entity.LawBookEntity;
 import com.rag.ragApp.pojos.ArticleData;
-import com.rag.ragApp.service.sources.IFetchDataSource;
+import com.rag.ragApp.pojos.LawBookPojo;
+import com.rag.ragApp.repository.LawBookRepository;
+import com.rag.ragApp.service.sources.coidotnet.FetchDataCoiDotNet;
+import com.rag.ragApp.service.sources.lawSchoolBooks.FetchDataPDFs;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +14,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class FetchDataService {
     @Autowired
-    private IFetchDataSource iFetchDataSource;
+    private FetchDataCoiDotNet fetchDataCoiDotNet;
+
+    @Autowired
+    private FetchDataPDFs fetchDataPDFs;
 
     @Autowired
     private ArticleService articleService;
@@ -19,8 +26,8 @@ public class FetchDataService {
         //135, 233, 340, 341, 394, 396, 397   missing
         for(int i = start; i <= end; i++){
             log.debug("Article in progress - {}", i);
-            String html = iFetchDataSource.fetchDataFromSource(i);
-            ArticleData articleData = (ArticleData) iFetchDataSource.parseDataAndReturnRequiredObject(html);
+            String html = fetchDataCoiDotNet.fetchDataFromSource(i);
+            ArticleData articleData = (ArticleData) fetchDataCoiDotNet.parseDataAndReturnRequiredObject(html);
             articleService.saveArticle(articleData);
             try {
                 Thread.sleep(500);
@@ -29,4 +36,9 @@ public class FetchDataService {
             }
         }
     }
+
+    public void fetchPdfsTextInJson(String path){
+            LawBookEntity lawBookEntity = fetchDataPDFs.fetchDataFromSource(path);
+        }
+
 }

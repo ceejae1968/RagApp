@@ -3,7 +3,9 @@ package com.rag.ragApp.service;
 import com.rag.ragApp.pojos.ArticleData;
 import com.rag.ragApp.entity.ArticleEntity;
 import com.rag.ragApp.repository.ArticleRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,14 +14,12 @@ import java.util.ArrayList;
 @Slf4j
 public class ArticleService {
 
-    private final ArticleRepository repository;
-    private final EmbeddingService embeddingService;
+    @Autowired
+    private ArticleRepository repository;
+    @Autowired
+    private EmbeddingService embeddingService;
 
-    public ArticleService(ArticleRepository repository, EmbeddingService embeddingService) {
-        this.repository = repository;
-        this.embeddingService = embeddingService;
-    }
-
+    @Transactional
     public void saveArticle(ArticleData parsed) {
         String text = "Part - " + parsed.getPart() +", Article - " + parsed.getArticleNumber() + " , Heading : " + parsed.getHeading() + ": " + parsed.getContent();
         log.debug("Embedding Text - {}", text);

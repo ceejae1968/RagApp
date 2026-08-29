@@ -1,4 +1,4 @@
-package com.rag.ragApp.service;
+package com.rag.ragApp.service.agents;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;

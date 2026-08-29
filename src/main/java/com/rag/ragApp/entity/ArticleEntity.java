@@ -40,6 +40,6 @@ public class ArticleEntity {
     private String sourceUrl;
 
     // pgvector column: map as float[] (requires custom converter)
-    @Column(name = "embedding", columnDefinition = "vector(1536)")
+    @Column(name = "embedding", columnDefinition = "vector(1024)")
     private float[] embedding;
 }

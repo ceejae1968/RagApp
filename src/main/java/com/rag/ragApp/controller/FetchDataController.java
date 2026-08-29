@@ -8,13 +8,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/fetch/coi")
+@RequestMapping("/fetch")
 public class FetchDataController {
     @Autowired
     private FetchDataService fetchDataService;
 
-    @PostMapping("/data")
+    @PostMapping("/coi/data")
     public void inititateFetchCoi(@RequestParam int start, @RequestParam int end){
         fetchDataService.fetchAllArticlesByNumber(start, end);
+    }
+
+    @PostMapping("/lawbook/pdf")
+    public void initiateFetchPdfsToObject(@RequestParam String path){
+        fetchDataService.fetchPdfsTextInJson(path);
     }
 }
